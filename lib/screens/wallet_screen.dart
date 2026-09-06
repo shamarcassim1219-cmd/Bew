@@ -118,7 +118,7 @@ class _WalletScreenState extends State<WalletScreen> {
                         Text(tr('Transaction History'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
                         const SizedBox(height: 8),
                         if (_transactions.isEmpty)
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.symmetric(vertical: 30),
                             child: Center(child: Text(tr('No transactions yet'), style: TextStyle(color: AppColors.hint))),
                           )
