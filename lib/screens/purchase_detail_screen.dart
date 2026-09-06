@@ -163,7 +163,7 @@ class _PurchaseDetailScreenState extends State<PurchaseDetailScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
+                  Row(
                     children: [
                       Icon(Icons.hourglass_top_outlined, color: Colors.orangeAccent, size: 20),
                       SizedBox(width: 8),
@@ -171,8 +171,7 @@ class _PurchaseDetailScreenState extends State<PurchaseDetailScreen> {
                     ],
                   ),
                   const SizedBox(height: 6),
-                  const Text(
-                    tr('You will be notified once credentials are shared. Usually within 1 hour.'),
+                  Text(tr('You will be notified once credentials are shared. Usually within 1 hour.'),
                     style: TextStyle(color: AppColors.hint, fontSize: 12),
                   ),
                   if (_deadlinePassed) ...[

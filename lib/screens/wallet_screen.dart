@@ -308,9 +308,9 @@ class _WalletScreenState extends State<WalletScreen> {
                 decoration: InputDecoration(labelText: tr('Amount (LKR)')),
               ),
               const SizedBox(height: 12),
-              const Text(
-                tr('Make sure your bank details are saved in Settings → Wallet & Bank Details before withdrawing. ')
-                'The amount will be deducted from your wallet immediately and refunded if the request is rejected.',
+              Text(
+                '${tr('Make sure your bank details are saved in Settings → Wallet & Bank Details before withdrawing. ')}'
+                '${tr('The amount will be deducted from your wallet immediately and refunded if the request is rejected.')}',
                 style: TextStyle(fontSize: 12, color: AppColors.hint),
               ),
               const SizedBox(height: 16),

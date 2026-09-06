@@ -60,8 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.surface,
         title: Text(tr('Delete Account'), style: TextStyle(color: Colors.white)),
-        content: const Text(
-          tr('This permanently deletes your profile, listings, and wallet history. This cannot be undone. Continue?'),
+        content: Text(tr('This permanently deletes your profile, listings, and wallet history. This cannot be undone. Continue?'),
           style: TextStyle(color: AppColors.hint),
         ),
         actions: [

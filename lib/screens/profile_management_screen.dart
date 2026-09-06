@@ -102,9 +102,9 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                tr('Your name and phone number are locked after the first save. ')
-                'Describe the change you need and our support team will update it for you.',
+              Text(
+                '${tr('Your name and phone number are locked after the first save. ')}'
+                '${tr('Describe the change you need and our support team will update it for you.')}',
                 style: TextStyle(color: AppColors.hint, fontSize: 13),
               ),
               const SizedBox(height: 12),

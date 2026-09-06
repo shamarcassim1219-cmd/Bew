@@ -88,8 +88,7 @@ class _WalletBankDetailsScreenState extends State<WalletBankDetailsScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                tr('We sent a 6-digit code to your email. Enter it below to confirm the bank details change.'),
+              Text(tr('We sent a 6-digit code to your email. Enter it below to confirm the bank details change.'),
                 style: TextStyle(color: AppColors.hint, fontSize: 13),
               ),
               const SizedBox(height: 16),

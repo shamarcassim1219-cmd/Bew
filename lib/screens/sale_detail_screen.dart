@@ -132,8 +132,7 @@ class _SaleDetailScreenState extends State<SaleDetailScreen> {
                   Text(_formatDuration(_remaining),
                       style: const TextStyle(color: Colors.orangeAccent, fontWeight: FontWeight.bold, fontSize: 16)),
                   const SizedBox(height: 6),
-                  const Text(
-                    tr('Funds will be added to your wallet automatically once escrow releases.'),
+                  Text(tr('Funds will be added to your wallet automatically once escrow releases.'),
                     textAlign: TextAlign.center,
                     style: TextStyle(color: AppColors.hint, fontSize: 12),
                   ),
