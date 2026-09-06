@@ -1,0 +1,85 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+
+      - name: Generate missing platform folders
+        run: flutter create --platforms=android --project-name mygame_app --org com.mygame.app .
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Restore Firebase config
+        run: echo "${{ secrets.FIREBASE_ANDROID_CONFIG }}" | base64 --decode > android/app/google-services.json
+
+      - name: Validate google-services.json
+        run: python3 -c "import json; json.load(open('android/app/google-services.json'))"
+
+      - name: Fix applicationId
+        run: |
+          sed -i 's/applicationId = "com.mygame.app.mygame_app"/applicationId = "com.mygame.app"/' android/app/build.gradle
+          sed -i 's/applicationId "com.mygame.app.mygame_app"/applicationId "com.mygame.app"/' android/app/build.gradle
+
+      - name: Bump minSdkVersion to 23
+        run: sed -i 's/flutter.minSdkVersion/23/' android/app/build.gradle
+
+      - name: Bump Kotlin plugin version
+        run: sed -i -E 's/(id "org\.jetbrains\.kotlin\.android" version ")[^"]*(")/\11.9.24\2/' android/settings.gradle
+
+      - name: Add Firebase Google Services plugin settings
+        run: sed -i '/id "dev.flutter.flutter-plugin-loader"/a\    id "com.google.gms.google-services" version "4.4.2" apply false' android/settings.gradle
+
+      - name: Add Firebase Google Services plugin app
+        run: sed -i '/id "dev.flutter.flutter-gradle-plugin"/a\    id "com.google.gms.google-services"' android/app/build.gradle
+
+      - name: Ensure INTERNET permission
+        run: |
+          MANIFEST="android/app/src/main/AndroidManifest.xml"
+          grep -q "android.permission.INTERNET" "$MANIFEST" || sed -i '/<\/manifest>/i\    <uses-permission android:name="android.permission.INTERNET" \/>' "$MANIFEST"
+
+      - name: Create missing asset folders
+        run: |
+          mkdir -p assets/images
+          mkdir -p assets/lang
+          touch assets/images/.gitkeep
+          touch assets/lang/.gitkeep
+
+      - name: Generate debug keystore if missing
+        run: |
+          if [ ! -f ~/.android/debug.keystore ]; then
+            mkdir -p ~/.android
+            keytool -genkeypair -v -keystore ~/.android/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+          fi
+
+      - name: Print SHA-1 fingerprint for Firebase
+        run: keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android | grep "SHA1:"
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mygame-app-release
+          path: build/app/outputs/flutter-apk/app-release.apk
