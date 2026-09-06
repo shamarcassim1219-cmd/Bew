@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 import '../localization.dart';
 import '../services/api_service.dart';
+import '../biometric_service.dart';
 import 'login_screen.dart';
 import 'verification_screen.dart';
 import 'profile_management_screen.dart';
@@ -34,6 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     _loadProfile();
+    _loadBiometricState();
   }
 
   Future<void> _loadProfile() async {
@@ -166,7 +168,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Text(tr('Biometric Lock'), style: TextStyle(color: Colors.white)),
             subtitle: Text(tr('Fingerprint / Face ID to open app'), style: TextStyle(color: AppColors.hint)),
             value: _biometricLock,
-            onChanged: (v) => setState(() => _biometricLock = v),
+            onChanged: _toggleBiometric,
           ),
           _tile(Icons.block_outlined, 'Blocked Users', null, () {
             Navigator.push(context, MaterialPageRoute(builder: (_) => const BlockedUsersScreen()));

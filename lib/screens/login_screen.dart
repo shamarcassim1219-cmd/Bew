@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../main.dart';
 import '../localization.dart';
 import '../services/api_service.dart';
+import '../biometric_service.dart';
 import 'otp_verify_screen.dart';
 import 'forgot_password_screen.dart';
 import 'home_screen.dart';
@@ -155,6 +156,15 @@ class _LoginScreenState extends State<LoginScreen> {
     _passCtrl.dispose();
     _referralCtrl.dispose();
     super.dispose();
+  }
+
+  Future<void> _loginWithBiometric() async {
+    final token = await BiometricService.authenticateAndGetToken();
+    if (token == null || token.isEmpty) return;
+    await ApiService.saveToken(token);
+    if (!mounted) return;
+    // Keep the existing post-login navigation/flow in this screen.
+    Navigator.pushReplacementNamed(context, '/home');
   }
 
   @override
