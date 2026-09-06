@@ -6,13 +6,15 @@ import '../services/api_service.dart';
 
 class ChatConversationScreen extends StatefulWidget {
   final int conversationId;
-  final String otherPartyEmail;
+  final String otherPartyEmail; // legacy/internal only; never displayed
+  final String? otherPartyDisplayName;
   final String listingTitle;
 
   const ChatConversationScreen({
     super.key,
     required this.conversationId,
     required this.otherPartyEmail,
+    this.otherPartyDisplayName,
     required this.listingTitle,
   });
 
@@ -29,7 +31,7 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
   bool _sending = false;
   Timer? _pollTimer;
 
-  String _headerEmail = '';
+  String _headerDisplayName = '';
   String _headerTitle = '';
 
   @override
@@ -51,8 +53,14 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
   }
 
   Future<void> _loadHeaderIfNeeded() async {
+    if (widget.otherPartyDisplayName?.trim().isNotEmpty == true) {
+      _headerDisplayName = widget.otherPartyDisplayName!.trim();
+      _headerTitle = widget.listingTitle;
+      return;
+    }
     if (widget.otherPartyEmail.isNotEmpty) {
-      _headerEmail = widget.otherPartyEmail;
+      // Do not expose email addresses to other users.
+      _headerDisplayName = tr('User');
       _headerTitle = widget.listingTitle;
       return;
     }
@@ -63,7 +71,9 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
         orElse: () => null,
       );
       if (match != null) {
-        _headerEmail = match['otherPartyEmail'] ?? '';
+        _headerDisplayName = (match['otherPartyDisplayName']?.toString().trim().isNotEmpty == true)
+            ? match['otherPartyDisplayName'].toString()
+            : tr('User');
         _headerTitle = match['listingTitle'] ?? '';
       }
     } catch (_) {
@@ -129,7 +139,7 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(_headerEmail.isNotEmpty ? _headerEmail : 'Chat', style: const TextStyle(fontSize: 15)),
+            Text(_headerDisplayName.isNotEmpty ? _headerDisplayName : tr('Chat'), style: const TextStyle(fontSize: 15)),
             if (_headerTitle.isNotEmpty)
               Text(_headerTitle, style: const TextStyle(fontSize: 11, color: AppColors.hint)),
           ],
@@ -160,7 +170,7 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
                                       Padding(
                                         padding: const EdgeInsets.only(left: 4, bottom: 2),
                                         child: Text(
-                                          m['senderEmail'] ?? '',
+                                          m['senderDisplayName']?.toString().trim().isNotEmpty == true ? m['senderDisplayName'].toString() : tr('User'),
                                           style: const TextStyle(color: AppColors.hint, fontSize: 10),
                                         ),
                                       ),

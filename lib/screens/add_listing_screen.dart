@@ -268,7 +268,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                   value: _allowBidding,
                   onChanged: (v) => setState(() => _allowBidding = v),
                   title: Text(tr('Allow Bidding'), style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold)),
-                  subtitle: Text(
+                  subtitle: const Text(
                     tr('Buyers can bid above your price. Once the first bid comes in, bidding runs for 12 hours.'),
                     style: TextStyle(color: AppColors.hint, fontSize: 11),
                   ),

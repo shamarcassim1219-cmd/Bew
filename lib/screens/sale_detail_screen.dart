@@ -145,7 +145,7 @@ class _SaleDetailScreenState extends State<SaleDetailScreen> {
               margin: const EdgeInsets.only(top: 20),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(color: Colors.greenAccent.withOpacity(0.1), borderRadius: BorderRadius.circular(14), border: Border.all(color: Colors.greenAccent.withOpacity(0.4))),
-              child: Row(
+              child: const Row(
                 children: [
                   Icon(Icons.check_circle_outline, color: Colors.greenAccent),
                   SizedBox(width: 10),

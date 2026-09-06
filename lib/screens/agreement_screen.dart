@@ -84,7 +84,7 @@ class _AgreementScreenState extends State<AgreementScreen> {
                     controlAffinity: ListTileControlAffinity.leading,
                     activeColor: AppColors.primary,
                     contentPadding: EdgeInsets.zero,
-                    title: Text(
+                    title: const Text(
                       tr('I have read and agree to the Terms, Escrow Policy, and Refund Policy.'),
                       style: TextStyle(fontSize: 13, color: Colors.white),
                     ),

@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
   final _referralCtrl = TextEditingController();
+  final _displayNameCtrl = TextEditingController();
   bool _isRegister = false;
   bool _loading = false;
   bool _googleLoading = false;
@@ -43,6 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
       }
 
       if (!mounted) return;
+      if (_isRegister) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('pending_display_name', _displayNameCtrl.text.trim());
+      }
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => OtpVerifyScreen(
@@ -87,6 +92,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
       await ApiService.googleSignIn(idToken);
 
+      // Use the Google profile name as the display name for new/empty profiles.
+      try {
+        final profile = await ApiService.getProfile();
+        final existingName = profile['displayName']?.toString().trim() ?? '';
+        final googleName = account.displayName?.trim() ?? '';
+        if (existingName.isEmpty && googleName.length >= 2) {
+          await ApiService.updateProfile(googleName, profile['phone']?.toString() ?? '');
+        }
+      } catch (_) {}
+
       try {
         final fcmToken = await FirebaseMessaging.instance.getToken();
         if (fcmToken != null) await ApiService.saveFcmToken(fcmToken);
@@ -109,6 +124,11 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future<void> _selectLanguage(String language) async {
+    await AppLanguage.instance.setLanguage(language);
+    if (mounted) setState(() {});
+  }
+
   void _comingSoon(String provider) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(tr('$provider sign-in coming soon'))),
@@ -127,9 +147,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+
+  @override
+  void dispose() {
+    _displayNameCtrl.dispose();
+    _emailCtrl.dispose();
+    _passCtrl.dispose();
+    _referralCtrl.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AnimatedBuilder(
+      animation: AppLanguage.instance,
+      builder: (context, _) => Scaffold(
       backgroundColor: AppColors.bg,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -139,24 +171,39 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 24),
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: _LoginLanguageSelector(onSelected: _selectLanguage),
+                ),
+                const SizedBox(height: 22),
                 Text(
-                  _isRegister ? 'Create account' : 'Welcome back',
+                  tr(_isRegister ? 'Create account' : 'Welcome back'),
                   style: const TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  _isRegister ? 'Sign up to get started' : 'Login to continue',
+                  tr(_isRegister ? 'Sign up to get started' : 'Login to continue'),
                   style: const TextStyle(color: AppColors.hint, fontSize: 15),
                 ),
                 const SizedBox(height: 36),
+
+                if (_isRegister) ...[
+                  TextFormField(
+                    controller: _displayNameCtrl,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: _fieldDecoration(hint: tr('Display Name'), icon: Icons.badge_outlined),
+                    validator: (v) => (v == null || v.trim().length < 2) ? tr('Enter a display name') : null,
+                  ),
+                  const SizedBox(height: 16),
+                ],
 
                 TextFormField(
                   controller: _emailCtrl,
                   keyboardType: TextInputType.emailAddress,
                   style: const TextStyle(color: Colors.white),
-                  decoration: _fieldDecoration(hint: 'Email', icon: Icons.mail_outline),
-                  validator: (v) => (v == null || !v.contains('@')) ? 'Enter a valid email' : null,
+                  decoration: _fieldDecoration(hint: tr('Email'), icon: Icons.mail_outline),
+                  validator: (v) => (v == null || !v.contains('@')) ? tr('Enter a valid email') : null,
                 ),
                 const SizedBox(height: 16),
 
@@ -165,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: _obscurePassword,
                   style: const TextStyle(color: Colors.white),
                   decoration: _fieldDecoration(
-                    hint: 'Password',
+                    hint: tr('Password'),
                     icon: Icons.lock_outline,
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -175,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
-                  validator: (v) => (v == null || v.length < 6) ? 'Min 6 characters' : null,
+                  validator: (v) => (v == null || v.length < 6) ? tr('Min 6 characters') : null,
                 ),
 
                 if (_isRegister) ...[
@@ -183,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     controller: _referralCtrl,
                     style: const TextStyle(color: Colors.white),
-                    decoration: _fieldDecoration(hint: 'Referral Code (optional)', icon: Icons.card_giftcard_outlined),
+                    decoration: _fieldDecoration(hint: tr('Referral Code (optional)'), icon: Icons.card_giftcard_outlined),
                   ),
                 ],
 
@@ -212,7 +259,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: _loading ? null : _submit,
                     child: _loading
                         ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black))
-                        : Text(_isRegister ? 'Sign Up' : 'Login', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        : Text(tr(_isRegister ? 'Sign Up' : 'Login'), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                 ),
 
@@ -274,6 +321,56 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
+      ),
+      ),
+    );
+  }
+}
+
+
+class _LoginLanguageSelector extends StatelessWidget {
+  final Future<void> Function(String) onSelected;
+  const _LoginLanguageSelector({required this.onSelected});
+
+
+  @override
+  void dispose() {
+    _displayNameCtrl.dispose();
+    _emailCtrl.dispose();
+    _passCtrl.dispose();
+    _referralCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final current = AppLanguage.instance.language;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _langButton(context, 'Sinhala', 'සිංහල', current == 'Sinhala'),
+        const SizedBox(width: 8),
+        _langButton(context, 'English', 'English', current == 'English'),
+        const SizedBox(width: 8),
+        _langButton(context, 'Tamil', 'தமிழ்', current == 'Tamil'),
+      ],
+    );
+  }
+
+  Widget _langButton(BuildContext context, String value, String label, bool selected) {
+    return InkWell(
+      onTap: () => onSelected(value),
+      borderRadius: BorderRadius.circular(24),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        decoration: BoxDecoration(
+          gradient: selected
+              ? const LinearGradient(colors: [Color(0xFFFF5A1F), Color(0xFFD5006D)])
+              : null,
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: selected ? Colors.transparent : AppColors.primary.withOpacity(0.65)),
+        ),
+        child: Text(label, style: TextStyle(color: selected ? Colors.white : AppColors.primary, fontWeight: FontWeight.w600)),
       ),
     );
   }

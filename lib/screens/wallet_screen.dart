@@ -118,7 +118,7 @@ class _WalletScreenState extends State<WalletScreen> {
                         Text(tr('Transaction History'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
                         const SizedBox(height: 8),
                         if (_transactions.isEmpty)
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.symmetric(vertical: 30),
                             child: Center(child: Text(tr('No transactions yet'), style: TextStyle(color: AppColors.hint))),
                           )
@@ -222,7 +222,7 @@ class _WalletScreenState extends State<WalletScreen> {
                               borderRadius: BorderRadius.circular(10),
                               child: Image.file(slipFile!, fit: BoxFit.cover, width: double.infinity, height: double.infinity),
                             )
-                          : Column(
+                          : const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.upload_file_outlined, color: AppColors.hint, size: 28),

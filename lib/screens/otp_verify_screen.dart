@@ -51,6 +51,19 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
       }
 
       final prefs = await SharedPreferences.getInstance();
+      if (widget.purpose == 'register') {
+        final pendingName = prefs.getString('pending_display_name')?.trim() ?? '';
+        if (pendingName.isNotEmpty) {
+          try {
+            final profile = await ApiService.getProfile();
+            final phone = profile['phone']?.toString() ?? '';
+            await ApiService.updateProfile(pendingName, phone);
+            await prefs.remove('pending_display_name');
+          } catch (_) {
+            // Profile can be completed later from Profile Management.
+          }
+        }
+      }
       await prefs.setBool('is_logged_in', true);
 
       if (!mounted) return;

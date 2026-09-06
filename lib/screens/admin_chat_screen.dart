@@ -136,7 +136,7 @@ class _AdminChatScreenState extends State<AdminChatScreen> {
                                   crossAxisAlignment: isAdmin ? CrossAxisAlignment.start : CrossAxisAlignment.end,
                                   children: [
                                     if (isAdmin)
-                                      Padding(
+                                      const Padding(
                                         padding: EdgeInsets.only(left: 4, bottom: 2),
                                         child: Text(tr('Admin'), style: TextStyle(color: AppColors.primary, fontSize: 10, fontWeight: FontWeight.bold)),
                                       ),
@@ -162,7 +162,7 @@ class _AdminChatScreenState extends State<AdminChatScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           if (isCredential)
-                                            Padding(
+                                            const Padding(
                                               padding: EdgeInsets.only(bottom: 6),
                                               child: Row(
                                                 children: [

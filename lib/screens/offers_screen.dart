@@ -127,7 +127,7 @@ class _OffersScreenState extends State<OffersScreen> with SingleTickerProviderSt
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(o['title'] ?? '', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                          Text('From ${o['buyerEmail']}', style: const TextStyle(color: AppColors.hint, fontSize: 12)),
+                          Text('${tr('From')} ${o['buyerDisplayName']?.toString().trim().isNotEmpty == true ? o['buyerDisplayName'].toString() : tr('User')}', style: const TextStyle(color: AppColors.hint, fontSize: 12)),
                         ],
                       ),
                     ),

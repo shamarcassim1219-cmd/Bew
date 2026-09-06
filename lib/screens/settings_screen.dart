@@ -104,7 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(user?['email'] ?? 'Guest User',
+                      Text((user?['displayName']?.toString().trim().isNotEmpty == true) ? user!['displayName'].toString() : tr('Guest User'),
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
                       const SizedBox(height: 4),
                       _VerifiedBadgeChip(status: user?['verifiedStatus'] ?? 'not_verified'),
@@ -124,7 +124,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const Divider(height: 1),
 
           _SectionHeader('Account'),
-          _tile(Icons.person_outline, 'Profile Management', 'Name, photo, phone/email', () async {
+          _tile(Icons.person_outline, 'Profile Management', 'Display name, photo, phone/email', () async {
             await Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileManagementScreen()));
             _loadProfile();
           }),

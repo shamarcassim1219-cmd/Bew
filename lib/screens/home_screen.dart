@@ -39,11 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedIndex: _tab,
         onDestinationSelected: (i) => setState(() => _tab = i),
         destinations: [
-          NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: tr('Home')),
-          NavigationDestination(icon: Icon(Icons.account_balance_wallet_outlined), selectedIcon: Icon(Icons.account_balance_wallet), label: tr('Wallet')),
-          NavigationDestination(icon: Icon(Icons.add_box_outlined), selectedIcon: Icon(Icons.add_box), label: tr('Sell')),
-          NavigationDestination(icon: Icon(Icons.chat_bubble_outline), selectedIcon: Icon(Icons.chat_bubble), label: tr('Chats')),
-          NavigationDestination(icon: Icon(Icons.settings_outlined), selectedIcon: Icon(Icons.settings), label: tr('Settings')),
+          NavigationDestination(icon: const Icon(Icons.home_outlined), selectedIcon: const Icon(Icons.home), label: tr('Home')),
+          NavigationDestination(icon: const Icon(Icons.account_balance_wallet_outlined), selectedIcon: const Icon(Icons.account_balance_wallet), label: tr('Wallet')),
+          NavigationDestination(icon: const Icon(Icons.add_box_outlined), selectedIcon: const Icon(Icons.add_box), label: tr('Sell')),
+          NavigationDestination(icon: const Icon(Icons.chat_bubble_outline), selectedIcon: const Icon(Icons.chat_bubble), label: tr('Chats')),
+          NavigationDestination(icon: const Icon(Icons.settings_outlined), selectedIcon: const Icon(Icons.settings), label: tr('Settings')),
         ],
       ),
     );
@@ -347,7 +347,7 @@ class _ChatsTabState extends State<_ChatsTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(16, 20, 16, 12),
+            padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
             child: Text(tr('Chats'), style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
           ),
           Expanded(
@@ -373,7 +373,8 @@ class _ChatsTabState extends State<_ChatsTab> {
                                       MaterialPageRoute(
                                         builder: (_) => ChatConversationScreen(
                                           conversationId: c['id'],
-                                          otherPartyEmail: c['otherPartyEmail'] ?? '',
+                                          otherPartyEmail: '',
+                                          otherPartyDisplayName: c['otherPartyDisplayName']?.toString(),
                                           listingTitle: c['listingTitle'] ?? '',
                                         ),
                                       ),
@@ -385,7 +386,7 @@ class _ChatsTabState extends State<_ChatsTab> {
                                         ? Image.network(c['listingImage'], width: 48, height: 48, fit: BoxFit.cover)
                                         : Container(width: 48, height: 48, color: AppColors.fieldFill, child: const Icon(Icons.image_outlined, color: AppColors.hint)),
                                   ),
-                                  title: Text(c['otherPartyEmail'] ?? '', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
+                                  title: Text(c['otherPartyDisplayName']?.toString().trim().isNotEmpty == true ? c['otherPartyDisplayName'] : tr('User'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
                                   subtitle: Text(
                                     c['lastMessage'] ?? c['listingTitle'] ?? '',
                                     maxLines: 1,

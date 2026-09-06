@@ -27,7 +27,7 @@ final Map<String, Map<String, String>> translations = {
   'Sinhala': {
     'View':'බලන්න','Settings':'සැකසුම්','Home':'මුල් පිටුව','Wallet':'පසුම්බිය','Sell':'විකුණන්න','Chats':'චැට්','Profile':'පැතිකඩ','Notifications':'දැනුම්දීම්','No notifications yet':'තවම දැනුම්දීම් නැත',
     'Login':'පිවිසෙන්න','Sign Up':'ලියාපදිංචි වන්න','Create account':'ගිණුමක් සාදන්න','Welcome back':'නැවත සාදරයෙන් පිළිගනිමු','Sign up to get started':'ආරම්භ කිරීමට ලියාපදිංචි වන්න','Login to continue':'ඉදිරියට යාමට පිවිසෙන්න',
-    'Email':'ඊමේල්','Password':'මුරපදය','New Password':'නව මුරපදය','Confirm New Password':'නව මුරපදය තහවුරු කරන්න','Current Password':'වත්මන් මුරපදය','Forgot Password?':'මුරපදය අමතකද?',
+    'Email':'ඊමේල්','Display Name':'පෙන්වන නම','Enter a display name':'පෙන්වන නමක් ඇතුළත් කරන්න','User':'පරිශීලකයා','From':'වෙතින්','Guest User':'ආගන්තුක පරිශීලකයා','Password':'මුරපදය','New Password':'නව මුරපදය','Confirm New Password':'නව මුරපදය තහවුරු කරන්න','Current Password':'වත්මන් මුරපදය','Forgot Password?':'මුරපදය අමතකද?',
     'Reset Password':'මුරපදය යළි සකසන්න','Send Code':'කේතය යවන්න','Resend Code':'කේතය නැවත යවන්න','Verification Code':'තහවුරු කිරීමේ කේතය','Enter the 6-digit code':'අංක 6ක කේතය ඇතුළත් කරන්න','Verify':'තහවුරු කරන්න',
     'Cancel':'අවලංගු කරන්න','Delete':'මකන්න','Save Changes':'වෙනස්කම් සුරකින්න','Submit':'යවන්න','Confirm':'තහවුරු කරන්න','Next':'ඊළඟ','Skip':'මඟ හරින්න','Get Started':'ආරම්භ කරන්න',
     'Language':'භාෂාව','English':'ඉංග්‍රීසි','Sinhala':'සිංහල','Tamil':'දෙමළ','Account':'ගිණුම','Profile Management':'පැතිකඩ කළමනාකරණය','Change Password / PIN':'මුරපදය / PIN වෙනස් කරන්න',
@@ -116,7 +116,7 @@ final Map<String, Map<String, String>> translations = {
   'Tamil': {
     'View':'பார்','Settings':'அமைப்புகள்','Home':'முகப்பு','Wallet':'பணப்பை','Sell':'விற்க','Chats':'அரட்டைகள்','Profile':'சுயவிவரம்','Notifications':'அறிவிப்புகள்','No notifications yet':'இன்னும் அறிவிப்புகள் இல்லை',
     'Login':'உள்நுழை','Sign Up':'பதிவு செய்க','Create account':'கணக்கை உருவாக்கு','Welcome back':'மீண்டும் வரவேற்கிறோம்','Sign up to get started':'தொடங்க பதிவு செய்க','Login to continue':'தொடர உள்நுழைக',
-    'Email':'மின்னஞ்சல்','Password':'கடவுச்சொல்','New Password':'புதிய கடவுச்சொல்','Confirm New Password':'புதிய கடவுச்சொல்லை உறுதிப்படுத்து','Current Password':'தற்போதைய கடவுச்சொல்','Forgot Password?':'கடவுச்சொல் மறந்துவிட்டதா?',
+    'Email':'மின்னஞ்சல்','Display Name':'காட்சிப் பெயர்','Enter a display name':'காட்சிப் பெயரை உள்ளிடவும்','User':'பயனர்','From':'இருந்து','Guest User':'விருந்தினர்','Password':'கடவுச்சொல்','New Password':'புதிய கடவுச்சொல்','Confirm New Password':'புதிய கடவுச்சொல்லை உறுதிப்படுத்து','Current Password':'தற்போதைய கடவுச்சொல்','Forgot Password?':'கடவுச்சொல் மறந்துவிட்டதா?',
     'Reset Password':'கடவுச்சொல்லை மீட்டமை','Send Code':'குறியீட்டை அனுப்பு','Resend Code':'குறியீட்டை மீண்டும் அனுப்பு','Verification Code':'சரிபார்ப்பு குறியீடு','Enter the 6-digit code':'6 இலக்க குறியீட்டை உள்ளிடவும்','Verify':'சரிபார்',
     'Cancel':'ரத்து செய்','Delete':'நீக்கு','Save Changes':'மாற்றங்களை சேமி','Submit':'சமர்ப்பி','Confirm':'உறுதிப்படுத்து','Next':'அடுத்து','Skip':'தவிர்','Get Started':'தொடங்கு',
     'Language':'மொழி','English':'ஆங்கிலம்','Sinhala':'சிங்களம்','Tamil':'தமிழ்','Account':'கணக்கு','Profile Management':'சுயவிவர மேலாண்மை','Change Password / PIN':'கடவுச்சொல் / PIN மாற்று',

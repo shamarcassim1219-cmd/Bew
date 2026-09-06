@@ -372,7 +372,7 @@ class _ListingDetailScreenState extends State<ListingDetailScreen> {
           ..._bids.map((b) => ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.gavel_outlined, color: AppColors.hint, size: 20),
-                title: Text(b['bidderEmail'] ?? '', style: const TextStyle(color: Colors.white, fontSize: 13)),
+                title: Text(b['bidderDisplayName']?.toString().trim().isNotEmpty == true ? b['bidderDisplayName'].toString() : tr('User'), style: const TextStyle(color: Colors.white, fontSize: 13)),
                 trailing: Text('LKR ${(b['amount'] as num).toStringAsFixed(2)}',
                     style: const TextStyle(color: Colors.greenAccent, fontWeight: FontWeight.bold)),
               )),
