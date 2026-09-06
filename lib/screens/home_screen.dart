@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: _tab,
         onDestinationSelected: (i) => setState(() => _tab = i),
-        destinations: const [
+        destinations: [
           NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: tr('Home')),
           NavigationDestination(icon: Icon(Icons.account_balance_wallet_outlined), selectedIcon: Icon(Icons.account_balance_wallet), label: tr('Wallet')),
           NavigationDestination(icon: Icon(Icons.add_box_outlined), selectedIcon: Icon(Icons.add_box), label: tr('Sell')),
@@ -153,7 +153,7 @@ class _HomeTabState extends State<_HomeTab> {
                       : null,
                 ),
                 const SizedBox(width: 10),
-                const Expanded(
+                Expanded(
                   child: Text(tr('MYGame Marketplace'),
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
                 ),
@@ -346,7 +346,7 @@ class _ChatsTabState extends State<_ChatsTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.fromLTRB(16, 20, 16, 12),
             child: Text(tr('Chats'), style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
           ),

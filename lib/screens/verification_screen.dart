@@ -174,7 +174,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.redAccent.withOpacity(0.4)),
               ),
-              child: const Row(
+              child: Row(
                 children: [
                   Icon(Icons.error_outline, color: Colors.redAccent, size: 20),
                   SizedBox(width: 10),
@@ -195,7 +195,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: AppColors.primary.withOpacity(0.4)),
             ),
-            child: const Row(
+            child: Row(
               children: [
                 Icon(Icons.verified, color: AppColors.primary, size: 32),
                 SizedBox(width: 12),

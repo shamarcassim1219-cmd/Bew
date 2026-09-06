@@ -23,7 +23,7 @@ class BannedScreen extends StatelessWidget {
               const SizedBox(height: 10),
               Text(tr('Reason: $reason'), textAlign: TextAlign.center, style: TextStyle(color: AppColors.hint, fontSize: 14)),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 tr('If you believe this is a mistake, please contact support.'),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: AppColors.hint, fontSize: 13),

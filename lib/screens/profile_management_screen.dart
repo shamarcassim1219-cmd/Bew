@@ -112,7 +112,7 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
                 controller: messageCtrl,
                 maxLines: 4,
                 style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: tr('e.g. Please change my name to John Silva and phone to 0771234567'),
                   hintStyle: TextStyle(color: AppColors.hint, fontSize: 13),
                 ),
