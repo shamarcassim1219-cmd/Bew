@@ -324,14 +324,6 @@ class _LoginLanguageSelector extends StatelessWidget {
   const _LoginLanguageSelector({required this.onSelected});
 
 
-  @override
-  void dispose() {
-    _displayNameCtrl.dispose();
-    _emailCtrl.dispose();
-    _passCtrl.dispose();
-    _referralCtrl.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

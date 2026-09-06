@@ -145,9 +145,9 @@ class _SaleDetailScreenState extends State<SaleDetailScreen> {
               margin: const EdgeInsets.only(top: 20),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(color: Colors.greenAccent.withOpacity(0.1), borderRadius: BorderRadius.circular(14), border: Border.all(color: Colors.greenAccent.withOpacity(0.4))),
-              child: const Row(
+              child: Row(
                 children: [
-                  Icon(Icons.check_circle_outline, color: Colors.greenAccent),
+                  const Icon(Icons.check_circle_outline, color: Colors.greenAccent),
                   SizedBox(width: 10),
                   Expanded(child: Text(tr('Payment has been released to your wallet.'), style: TextStyle(color: Colors.greenAccent, fontSize: 13))),
                 ],

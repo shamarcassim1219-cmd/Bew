@@ -222,7 +222,7 @@ class _WalletScreenState extends State<WalletScreen> {
                               borderRadius: BorderRadius.circular(10),
                               child: Image.file(slipFile!, fit: BoxFit.cover, width: double.infinity, height: double.infinity),
                             )
-                          : const Column(
+                          : Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.upload_file_outlined, color: AppColors.hint, size: 28),
