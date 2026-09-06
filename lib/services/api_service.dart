@@ -206,6 +206,53 @@ class ApiService {
     await _handle(res);
   }
 
+
+  // ---------- SUPPORT / REPORTS ----------
+  static Future<List<dynamic>> getMyReports() async {
+    final res = await http.get(
+      Uri.parse('$baseUrl/user/reports'),
+      headers: await _headers(),
+    );
+    final data = await _handle(res);
+    return (data['reports'] as List?) ?? [];
+  }
+
+  static Future<Map<String, dynamic>> getMyReport(int id) async {
+    final res = await http.get(
+      Uri.parse('$baseUrl/user/reports/$id'),
+      headers: await _headers(),
+    );
+    final data = await _handle(res);
+    final report = data['report'];
+    return report is Map<String, dynamic> ? report : Map<String, dynamic>.from(report ?? data);
+  }
+
+  static Future<int> createReport(String subject, String message, {String? screenshotUrl}) async {
+    final body = <String, dynamic>{
+      'subject': subject,
+      'message': message,
+    };
+    if (screenshotUrl != null && screenshotUrl.isNotEmpty) {
+      body['screenshotUrl'] = screenshotUrl;
+    }
+    final res = await http.post(
+      Uri.parse('$baseUrl/user/reports'),
+      headers: await _headers(),
+      body: jsonEncode(body),
+    );
+    final data = await _handle(res);
+    return int.tryParse('${data['id'] ?? data['reportId'] ?? 0}') ?? 0;
+  }
+
+  static Future<void> replyToReport(int id, String content) async {
+    final res = await http.post(
+      Uri.parse('$baseUrl/user/reports/$id/reply'),
+      headers: await _headers(),
+      body: jsonEncode({'content': content}),
+    );
+    await _handle(res);
+  }
+
   // ---------- LISTINGS ----------
   static Future<List<dynamic>> getListings({String? game}) async {
     final uri = Uri.parse('$baseUrl/listings').replace(
